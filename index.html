@@ -1,158 +1,148 @@
-<!DOCTYPE html>
+[18.10.2026 16:00] Joseph: <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>YusufDemo</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    body {
-      margin: 0;
-      padding: 24px;
-      background: #101522;
-      color: white;
-      font-family: Arial, sans-serif;
-    }
-    main {
-      max-width: 600px;
-      margin: 35px auto;
-    }
-    section {
-      background: #1b2334;
-      padding: 22px;
-      border-radius: 16px;
-      margin-bottom: 20px;
-    }
-    input, textarea, button {
-      box-sizing: border-box;
-      width: 100%;
-      padding: 13px;
-      margin-top: 12px;
-      border-radius: 9px;
-      border: 1px solid #39445c;
-      font-size: 16px;
-    }
-    input, textarea {
-      background: #101522;
-      color: white;
-    }
-    button {
-      background: #45d6a0;
-      color: #101522;
-      border: 0;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .entry {
-      padding: 12px 0;
-      border-bottom: 1px solid #39445c;
-      overflow-wrap: anywhere;
-    }
-    #status { color: #45d6a0; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instagram | نموذج تجريبي</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;background:#fafafa;color:#262626;
+  font-family:Arial,sans-serif;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px
+}
+.card{
+  background:#fff;border:1px solid #dbdbdb;
+  width:100%;max-width:360px;padding:32px 28px;
+  text-align:center
+}
+.logo{font-size:29px;font-weight:bold;direction:ltr;margin:5px 0 28px}
+.notice{font-size:12px;color:#8a4b08;background:#fff6e5;padding:9px;margin-bottom:20px}
+h2{font-size:17px;margin:12px 0}
+p{font-size:14px;line-height:1.8;color:#737373}
+input{
+  display:block;width:100%;padding:12px;margin:12px 0;
+  border:1px solid #dbdbdb;border-radius:4px;
+  background:#fafafa;font-size:14px;direction:auto
+}
+button{
+  width:100%;padding:11px;margin-top:10px;border:0;
+  border-radius:7px;background:#0095f6;color:white;
+  font-weight:bold;font-size:14px;cursor:pointer
+}
+button:disabled{opacity:.6}
+.hidden{display:none}
+.msg{font-size:13px;color:#b42318;margin-top:12px}
+.success{color:#16803d}
+a{color:#0095f6;cursor:pointer;font-size:13px}
+</style>
 </head>
 <body>
-<main>
-  <h1>YusufDemo</h1>
-  <p>منصة اختبار تجريبية</p>
+<main class="card">
+  <div class="logo">Instagram</div>
+  <div class="notice"></div>
 
-  <section>
-    <h2>إرسال بيانات الاختبار</h2>
-    <form id="demoForm">
-      <input id="testName" placeholder="اسم تجريبي" required maxlength="80">
-      <textarea id="testNote" placeholder="ملاحظة تجريبية" maxlength="500"></textarea>
-      <button type="submit">إرسال الاختبار</button>
+  <section id="step1">
+    <h2>اختبار استعادة الحساب</h2>
+    <p>أدخل اسم مستخدم تجريبيًا للانتقال إلى الخطوة التالية.</p>
+    <form id="userForm">
+      <input id="username" placeholder="اسم مستخدم تجريبي" required maxlength="40" autocomplete="off">
+      <button>متابعة</button>
     </form>
-    <p id="status"></p>
   </section>
 
-  <section>
-    <h2>سجل الاختبارات</h2>
-    <div id="entries">جارٍ تحميل البيانات...</div>
+  <section id="step2" class="hidden">
+    <h2>رمز التحقق التجريبي</h2>
+    <p>في عملية الاسترداد الحقيقية قد تختلف وسيلة التحقق. هذه الصفحة لا ترسل رسائل واتساب ولا تستقبل رموزًا حقيقية.</p>
+    <p>للتجربة فقط، استخدم الرمز الظاهر هنا:</p>
+    <h2 dir="ltr">123456</h2>
+    <form id="codeForm">
+      <input id="code" inputmode="numeric" placeholder="أدخل الرمز التجريبي" required maxlength="6" autocomplete="off">
+      <button>التحقق والمتابعة</button>
+    </form>
+    <div id="codeMsg" class="msg"></div>
+    <p><a id="back1">رجوع</a></p>
+  </section>
+
+  <section id="step3" class="hidden">
+    <h2>إنشاء كلمة مرور تجريبية</h2>
+    <p>أنشئ كلمة مرور للاختبار فقط. لن تتغير كلمة مرور أي حساب حقيقي.</p>
+    <form id="passwordForm">
+      <input id="password" type="password" placeholder="كلمة مرور تجريبية جديدة" required minlength="8" autocomplete="new-password">
+      <input id="confirm" type="password" placeholder="تأكيد كلمة المرور" required minlength="8" autocomplete="new-password">
+      <button>إنهاء الاختبار</button>
+    </form>
+    <div id="passwordMsg" class="msg"></div>
+  </section>
+
+  <section id="step4" class="hidden">
+    <h2>اكتمل الاختبار بنجاح</h2>
+    <p class="success">تم اختبار الانتقال بين الصفحات. لم يتم إرسال أي رمز أو حفظ أي كلمة مرور.</p>
+    <button id="restart">بدء اختبار جديد</button>
   </section>
 </main>
 
 <script>
-  const SUPABASE_URL = "https://dlmaxrijrqntcssvrsmy.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_GT-Qf2XW60whOuv8iecblg_7L5ZlnEZ";
+const sections = ["step1","step2","step3","step4"];
 
-  const db = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
+function showStep(id) {
+  sections.forEach(s =>
+    document.getElementById(s).classList.toggle("hidden", s !== id)
   );
+}
 
-  const form = document.getElementById("demoForm");
-  const status = document.getElementById("status");
-  const entries = document.getElementById("entries");
+document.getElementById("userForm").addEventListener("submit", e => {
+  e.preventDefault();
+  if (document.getElementById("username").value.trim()) {
+    showStep("step2");
+  }
+});
 
-  async function loadEntries() {
-    const { data, error } = await db
-      .from("demo_submissions")
-      .select("id, test_name, test_note, created_at")
-      .order("created_at", { ascending: false })
-      .limit(30);
+document.getElementById("codeForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const code = document.getElementById("code").value.trim();
+  const msg = document.getElementById("codeMsg");
 
-    if (error) {
-      entries.textContent = "تعذّر تحميل البيانات. تحقق من إعدادات Supabase.";
-      return;
-    }
+  if (code === "123456") {
+    msg.textContent = "";
+    showStep("step3");
+  } else {
+    msg.textContent = "الرمز التجريبي غير صحيح. استخدم 123456.";
+  }
+});
 
-    entries.replaceChildren();
+document.getElementById("passwordForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const p = document.getElementById("password").value;
+  const c = document.getElementById("confirm").value;
+  const msg = document.getElementById("passwordMsg");
 
-    if (!data.length) {
-      entries.textContent = "لا توجد اختبارات بعد.";
-      return;
-    }
-
-    data.forEach(item => {
-      const card = document.createElement("div");
-      card.className = "entry";
-
-      const name = document.createElement("strong");
-      name.textContent = item.test_name;
-
-      const note = document.createElement("p");
-      note.textContent = item.test_note || "بدون ملاحظة";
-
-      const date = document.createElement("small");
-      date.textContent = new Date(item.created_at).toLocaleString();
-
-      card.append(name, note, date);
-      entries.append(card);
-    });
+  if (p !== c) {
+    msg.
+[18.10.2026 16:00] Joseph: textContent = "كلمتا المرور غير متطابقتين.";
+    return;
   }
 
-  form.addEventListener("submit", async event => {
-    event.preventDefault();
-    status.textContent = "جارٍ الإرسال...";
+  // لا يتم حفظ كلمة المرور أو إرسالها إلى أي مكان.
+  document.getElementById("password").value = "";
+  document.getElementById("confirm").value = "";
+  msg.textContent = "";
+  showStep("step4");
+});
 
-    const testName = document.getElementById("testName").value.trim();
-    const testNote = document.getElementById("testNote").value.trim();
+document.getElementById("back1").addEventListener("click", () => {
+  showStep("step1");
+});
 
-    if (!testName) {
-      status.textContent = "اكتب اسمًا تجريبيًا.";
-      return;
-    }
-
-    const { error } = await db
-      .from("demo_submissions")
-      .insert({
-        test_name: testName,
-        test_note: testNote || null
-      });
-
-    if (error) {
-      status.textContent = "فشل الإرسال. تحقق من إعدادات قاعدة البيانات.";
-      return;
-    }
-
-    status.textContent = "تم إرسال الاختبار بنجاح!";
-    form.reset();
-    await loadEntries();
-  });
-
-  loadEntries();
-  setInterval(loadEntries, 3000);
+document.getElementById("restart").addEventListener("click", () => {
+  document.getElementById("userForm").reset();
+  document.getElementById("codeForm").reset();
+  document.getElementById("passwordForm").reset();
+  document.getElementById("codeMsg").textContent = "";
+  document.getElementById("passwordMsg").textContent = "";
+  showStep("step1");
+});
 </script>
 </body>
 </html>
