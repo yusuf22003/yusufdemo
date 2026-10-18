@@ -1,148 +1,263 @@
-[18.10.2026 16:00] Joseph: <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Instagram | نموذج تجريبي</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إعادة تعيين كلمة المرور - إنستغرام</title>
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;background:#fafafa;color:#262626;
-  font-family:Arial,sans-serif;min-height:100vh;
-  display:flex;align-items:center;justify-content:center;
-  padding:20px
-}
-.card{
-  background:#fff;border:1px solid #dbdbdb;
-  width:100%;max-width:360px;padding:32px 28px;
-  text-align:center
-}
-.logo{font-size:29px;font-weight:bold;direction:ltr;margin:5px 0 28px}
-.notice{font-size:12px;color:#8a4b08;background:#fff6e5;padding:9px;margin-bottom:20px}
-h2{font-size:17px;margin:12px 0}
-p{font-size:14px;line-height:1.8;color:#737373}
-input{
-  display:block;width:100%;padding:12px;margin:12px 0;
-  border:1px solid #dbdbdb;border-radius:4px;
-  background:#fafafa;font-size:14px;direction:auto
-}
-button{
-  width:100%;padding:11px;margin-top:10px;border:0;
-  border-radius:7px;background:#0095f6;color:white;
-  font-weight:bold;font-size:14px;cursor:pointer
-}
-button:disabled{opacity:.6}
-.hidden{display:none}
-.msg{font-size:13px;color:#b42318;margin-top:12px}
-.success{color:#16803d}
-a{color:#0095f6;cursor:pointer;font-size:13px}
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    }
+
+    body {
+        background: #ffffff;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .container {
+        background: #ffffff;
+        width: 100%;
+        max-width: 420px;
+        border-radius: 12px;
+        border: 1px solid #dbdbdb;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        padding: 40px 35px;
+        text-align: center;
+    }
+
+    .logo {
+        font-family: 'Brush Script MT', cursive;
+        font-size: 42px;
+        font-weight: bold;
+        color: #262626;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        color: #262626;
+        font-size: 18px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+
+    .subtitle {
+        color: #8e8e8e;
+        font-size: 14px;
+        margin-bottom: 25px;
+        line-height: 1.5;
+    }
+
+    .input-group {
+        margin-bottom: 15px;
+        text-align: right;
+    }
+
+    input {
+        width: 100%;
+        padding: 14px 15px;
+        border: 1px solid #dbdbdb;
+        border-radius: 8px;
+        font-size: 14px;
+        background: #ffffff;
+        color: #262626;
+        transition: 0.2s;
+        outline: none;
+    }
+
+    input:focus {
+        border-color: #a1a1a1;
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        background: #ffffff;
+        color: #262626;
+        border: 1px solid #262626;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        background: #f5f5f5;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .msg {
+        font-size: 13px;
+        margin-top: 10px;
+        min-height: 18px;
+        color: #262626;
+    }
+
+    .error { color: #ed4956; }
+    .success { color: #262626; }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        color: #262626;
+        font-size: 14px;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .whatsapp-note {
+        font-size: 13px;
+        color: #262626;
+        margin-bottom: 20px;
+        background: #ffffff;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #dbdbdb;
+    }
 </style>
 </head>
 <body>
-<main class="card">
-  <div class="logo">Instagram</div>
-  <div class="notice"></div>
 
-  <section id="step1">
-    <h2>اختبار استعادة الحساب</h2>
-    <p>أدخل اسم مستخدم تجريبيًا للانتقال إلى الخطوة التالية.</p>
-    <form id="userForm">
-      <input id="username" placeholder="اسم مستخدم تجريبي" required maxlength="40" autocomplete="off">
-      <button>متابعة</button>
-    </form>
-  </section>
+<div class="container">
 
-  <section id="step2" class="hidden">
-    <h2>رمز التحقق التجريبي</h2>
-    <p>في عملية الاسترداد الحقيقية قد تختلف وسيلة التحقق. هذه الصفحة لا ترسل رسائل واتساب ولا تستقبل رموزًا حقيقية.</p>
-    <p>للتجربة فقط، استخدم الرمز الظاهر هنا:</p>
-    <h2 dir="ltr">123456</h2>
-    <form id="codeForm">
-      <input id="code" inputmode="numeric" placeholder="أدخل الرمز التجريبي" required maxlength="6" autocomplete="off">
-      <button>التحقق والمتابعة</button>
-    </form>
-    <div id="codeMsg" class="msg"></div>
-    <p><a id="back1">رجوع</a></p>
-  </section>
+    <!-- الخطوة 1: إدخال الإيميل أو اسم المستخدم -->
+    <div id="step1">
+        <div class="logo">Instagram</div>
+        <h2>قم بإعادة تعيين كلمة المرور</h2>
+        <p class="subtitle">أدخل بريدك الإلكتروني أو اسم المستخدم لإعادة تعيين كلمة المرور</p>
 
-  <section id="step3" class="hidden">
-    <h2>إنشاء كلمة مرور تجريبية</h2>
-    <p>أنشئ كلمة مرور للاختبار فقط. لن تتغير كلمة مرور أي حساب حقيقي.</p>
-    <form id="passwordForm">
-      <input id="password" type="password" placeholder="كلمة مرور تجريبية جديدة" required minlength="8" autocomplete="new-password">
-      <input id="confirm" type="password" placeholder="تأكيد كلمة المرور" required minlength="8" autocomplete="new-password">
-      <button>إنهاء الاختبار</button>
-    </form>
-    <div id="passwordMsg" class="msg"></div>
-  </section>
+        <div class="input-group">
+            <input type="text" id="identifier" placeholder="البريد الإلكتروني أو اسم المستخدم">
+        </div>
 
-  <section id="step4" class="hidden">
-    <h2>اكتمل الاختبار بنجاح</h2>
-    <p class="success">تم اختبار الانتقال بين الصفحات. لم يتم إرسال أي رمز أو حفظ أي كلمة مرور.</p>
-    <button id="restart">بدء اختبار جديد</button>
-  </section>
-</main>
+        <button onclick="sendCode()">إرسال كود التحقق</button>
+        <div class="msg" id="msg1"></div>
+    </div>
+
+    <!-- الخطوة 2: إدخال كود التحقق -->
+    <div id="step2" class="hidden">
+        <div class="logo">Instagram</div>
+        <h2>أدخل كود التحقق</h2>
+        <div class="whatsapp-note">
+            أرسلنا كود تحقق إلى <b>واتساب</b>
+        </div>
+        <p class="subtitle">أدخل كود التحقق</p>
+
+        <div class="input-group">
+            <input type="text" id="verificationCode" placeholder="كود التحقق">
+        </div>
+
+        <button onclick="verifyCode()">تحقق من الكود</button>
+        <div class="msg" id="msg2"></div>
+        <a class="back-link" onclick="backToStep1()">رجوع</a>
+    </div>
+
+    <!-- الخطوة 3: كلمة مرور جديدة -->
+    <div id="step3" class="hidden">
+        <div class="logo">Instagram</div>
+        <h2>إنشاء كلمة مرور جديدة</h2>
+        <p class="subtitle">يجب أن تكون كلمة المرور 6 أحرف على الأقل</p>
+
+        <div class="input-group">
+            <input type="password" id="newPass" placeholder="كلمة المرور الجديدة">
+        </div>
+        <div class="input-group">
+            <input type="password" id="confirmPass" placeholder="تأكيد كلمة المرور الجديدة">
+        </div>
+
+        <button onclick="resetPassword()">تعيين كلمة المرور</button>
+        <div class="msg" id="msg3"></div>
+    </div>
+
+    <!-- الخطوة 4: النجاح -->
+    <div id="step4" class="hidden">
+        <div class="logo">Instagram</div>
+        <h2>تم بنجاح</h2>
+        <p class="subtitle">تمت إعادة تعيين كلمة المرور بنجاح.<br>يمكنك الآن تسجيل الدخول بكلمة المرور الجديدة.</p>
+    </div>
+
+</div>
 
 <script>
-const sections = ["step1","step2","step3","step4"];
+    let userIdentifier = "";
 
-function showStep(id) {
-  sections.forEach(s =>
-    document.getElementById(s).classList.toggle("hidden", s !== id)
-  );
-}
+    function showMsg(id, text, type) {
+        const el = document.getElementById(id);
+        el.textContent = text;
+        el.className = "msg " + type;
+    }
 
-document.getElementById("userForm").addEventListener("submit", e => {
-  e.preventDefault();
-  if (document.getElementById("username").value.trim()) {
-    showStep("step2");
-  }
-});
+    // الخطوة 1: إرسال الكود
+    function sendCode() {
+        const idInput = document.getElementById("identifier").value.trim();
+        if (!idInput) {
+            showMsg("msg1", "الرجاء إدخال البريد الإلكتروني أو اسم المستخدم", "error");
+            return;
+        }
+        userIdentifier = idInput;
+        showMsg("msg1", "تم إرسال الكود على واتساب", "success");
 
-document.getElementById("codeForm").addEventListener("submit", e => {
-  e.preventDefault();
-  const code = document.getElementById("code").value.trim();
-  const msg = document.getElementById("codeMsg");
+        setTimeout(() => {
+            document.getElementById("step1").classList.add("hidden");
+            document.getElementById("step2").classList.remove("hidden");
+            document.getElementById("verificationCode").focus();
+        }, 800);
+    }
 
-  if (code === "123456") {
-    msg.textContent = "";
-    showStep("step3");
-  } else {
-    msg.textContent = "الرمز التجريبي غير صحيح. استخدم 123456.";
-  }
-});
+    // الخطوة 2: التحقق من الكود
+    function verifyCode() {
+        const code = document.getElementById("verificationCode").value.trim();
 
-document.getElementById("passwordForm").addEventListener("submit", e => {
-  e.preventDefault();
-  const p = document.getElementById("password").value;
-  const c = document.getElementById("confirm").value;
-  const msg = document.getElementById("passwordMsg");
+        if (!code) {
+            showMsg("msg2", "الرجاء إدخال كود التحقق", "error");
+            return;
+        }
 
-  if (p !== c) {
-    msg.
-[18.10.2026 16:00] Joseph: textContent = "كلمتا المرور غير متطابقتين.";
-    return;
-  }
+        // الانتقال مباشرة إلى الصفحة التالية
+        document.getElementById("step2").classList.add("hidden");
+        document.getElementById("step3").classList.remove("hidden");
+    }
 
-  // لا يتم حفظ كلمة المرور أو إرسالها إلى أي مكان.
-  document.getElementById("password").value = "";
-  document.getElementById("confirm").value = "";
-  msg.textContent = "";
-  showStep("step4");
-});
+    function backToStep1() {
+        document.getElementById("step2").classList.add("hidden");
+        document.getElementById("step1").classList.remove("hidden");
+        document.getElementById("identifier").value = "";
+        showMsg("msg1", "", "");
+    }
 
-document.getElementById("back1").addEventListener("click", () => {
-  showStep("step1");
-});
+    // الخطوة 3: تعيين كلمة المرور الجديدة
+    function resetPassword() {
+        const pass = document.getElementById("newPass").value;
+        const confirm = document.getElementById("confirmPass").value;
 
-document.getElementById("restart").addEventListener("click", () => {
-  document.getElementById("userForm").reset();
-  document.getElementById("codeForm").reset();
-  document.getElementById("passwordForm").reset();
-  document.getElementById("codeMsg").textContent = "";
-  document.getElementById("passwordMsg").textContent = "";
-  showStep("step1");
-});
+        if (pass.length < 6) {
+            showMsg("msg3", "كلمة المرور يجب أن تكون 6 أحرف على الأقل", "error");
+            return;
+        }
+        if (pass !== confirm) {
+            showMsg("msg3", "كلمتا المرور غير متطابقتين", "error");
+            return;
+        }
+
+        showMsg("msg3", "تم تعيين كلمة المرور بنجاح", "success");
+
+        setTimeout(() => {
+            document.getElementById("step3").classList.add("hidden");
+            document.getElementById("step4").classList.remove("hidden");
+        }, 800);
+    }
 </script>
+
 </body>
 </html>
